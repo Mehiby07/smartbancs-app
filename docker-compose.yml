@@ -1,0 +1,43 @@
+﻿version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: smartbancs_db
+    environment:
+      POSTGRES_DB: smartbancs_db
+      POSTGRES_USER: smartbancs_user
+      POSTGRES_PASSWORD: bancs_pass123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - smartbancs_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartbancs_user -d smartbancs_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: smartbancs_backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://smartbancs_user:bancs_pass123@db:5432/smartbancs_db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - smartbancs_net
+
+networks:
+  smartbancs_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
