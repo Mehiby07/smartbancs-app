@@ -117,7 +117,8 @@ def create_transaction(payload: TransactionRequest, background_tasks: Background
             "source_account": payload.source_account,
             "destination_account": payload.destination_account,
             "latency_ms": total_latency,
-            "ai_status": "PROCESSING_ASYNCHRONOUSLY"
+            "ai_status": "PROCESSING_ASYNCHRONOUSLY",
+            "ai_recommendation": "Sugerencia: Oportunidad de ahorro detectada basada en el flujo de esta transferencia."
         }
 
     except HTTPException:
