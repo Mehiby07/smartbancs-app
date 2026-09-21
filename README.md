@@ -40,8 +40,11 @@ No necesitas instalar dependencias de Python ni configurar bases de datos locale
 
 1. **Clonar o abrir el repositorio en tu terminal:**
    ```bash
-   git clone <tu-repositorio>
+   git clone smartbancs-app
    cd smartbancs-app
+   Para ejecutar y ver el dashboard python (`python -m streamlit run dashboard.py`)
+   Para ejecutar y ver el backend (`docker compose up --build`)
+   Para entrar (`http://localhost:8000/docs`)
    ---
 
 ## 👤 Autor
