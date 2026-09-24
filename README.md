@@ -57,15 +57,6 @@ El repositorio no incluye un servicio Prometheus ni una UI en `localhost:9090`; 
 
 El endpoint de diagnóstico requiere `ENABLE_DB_DIAGNOSTICS=true` y el header `X-Admin-Token`. Los valores de Docker son de demostración.
 
-### Pendiente / fuera de alcance del MVP
-
-| Capacidad | Estado |
-| --- | --- |
-| Tracing distribuido con OpenTelemetry | Pendiente |
-| Agregador de logs como Loki o ELK | Pendiente |
-| Alertmanager con notificaciones | Pendiente |
-| Retención de métricas a largo plazo | Pendiente |
-| Autenticación real del endpoint de diagnóstico | Pendiente; actualmente usa un token estático de demostración |
 
 ## Verificación reproducible
 
