@@ -1,1 +1,288 @@
-[]
+[
+  {
+    "transaction_id": "TX-0001",
+    "account_number": "CTA-1001",
+    "amount": 125.5,
+    "currency": "USD",
+    "date": "2024-03-15",
+    "date_valid": true,
+    "raw_date_value": "2024-03-15",
+    "ai_feature_vector": [
+      125.5,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0002",
+    "account_number": "CTA-2002",
+    "amount": 980.0,
+    "currency": "USD",
+    "date": "2024-03-16",
+    "date_valid": true,
+    "raw_date_value": "2024/03/16",
+    "ai_feature_vector": [
+      980.0,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0003",
+    "account_number": "CTA-3003",
+    "amount": 42.75,
+    "currency": "USD",
+    "date": "2024-03-17",
+    "date_valid": true,
+    "raw_date_value": "17-03-2024",
+    "ai_feature_vector": [
+      42.75,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0004",
+    "account_number": "CTA-4004",
+    "amount": 1500.25,
+    "currency": "EUR",
+    "date": "2024-03-18",
+    "date_valid": true,
+    "raw_date_value": "2024-03-18",
+    "ai_feature_vector": [
+      1500.25,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0005",
+    "account_number": "CTA-1001",
+    "amount": 67.1,
+    "currency": "EUR",
+    "date": "2024-03-19",
+    "date_valid": true,
+    "raw_date_value": "2024/03/19",
+    "ai_feature_vector": [
+      67.1,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0006",
+    "account_number": "CTA-2002",
+    "amount": 230.0,
+    "currency": "USD",
+    "date": "2024-03-19",
+    "date_valid": true,
+    "raw_date_value": "19-03-2024",
+    "ai_feature_vector": [
+      230.0,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0007",
+    "account_number": "CTA-3003",
+    "amount": 12.99,
+    "currency": "USD",
+    "date": "2024-03-20",
+    "date_valid": true,
+    "raw_date_value": "2024-03-20",
+    "ai_feature_vector": [
+      12.99,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0008",
+    "account_number": "CTA-4004",
+    "amount": 450.8,
+    "currency": "GBP",
+    "date": "2024-03-21",
+    "date_valid": true,
+    "raw_date_value": "2024/03/21",
+    "ai_feature_vector": [
+      450.8,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0009",
+    "account_number": "CTA-1001",
+    "amount": 75.0,
+    "currency": "USD",
+    "date": "2024-03-21",
+    "date_valid": true,
+    "raw_date_value": "21-03-2024",
+    "ai_feature_vector": [
+      75.0,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0010",
+    "account_number": "CTA-2002",
+    "amount": 610.45,
+    "currency": "EUR",
+    "date": "2024-03-22",
+    "date_valid": true,
+    "raw_date_value": "2024-03-22",
+    "ai_feature_vector": [
+      610.45,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0011",
+    "account_number": "CTA-3003",
+    "amount": 89.3,
+    "currency": "USD",
+    "date": "2024-03-23",
+    "date_valid": true,
+    "raw_date_value": "2024/03/23",
+    "ai_feature_vector": [
+      89.3,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0012",
+    "account_number": "CTA-4004",
+    "amount": 1200.0,
+    "currency": "GBP",
+    "date": "2024-03-23",
+    "date_valid": true,
+    "raw_date_value": "23-03-2024",
+    "ai_feature_vector": [
+      1200.0,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0013",
+    "account_number": "CTA-1001",
+    "amount": 15.25,
+    "currency": "USD",
+    "date": "2024-03-24",
+    "date_valid": true,
+    "raw_date_value": "2024-03-24",
+    "ai_feature_vector": [
+      15.25,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0014",
+    "account_number": "CTA-2002",
+    "amount": 325.9,
+    "currency": "EUR",
+    "date": "2024-03-25",
+    "date_valid": true,
+    "raw_date_value": "2024/03/25",
+    "ai_feature_vector": [
+      325.9,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0015",
+    "account_number": "CTA-3003",
+    "amount": 205.0,
+    "currency": "USD",
+    "date": "2024-03-25",
+    "date_valid": true,
+    "raw_date_value": "25-03-2024",
+    "ai_feature_vector": [
+      205.0,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0024",
+    "account_number": "CTA-1001",
+    "amount": 74.2,
+    "currency": "USD",
+    "date": null,
+    "date_valid": false,
+    "raw_date_value": "31-02-2024",
+    "ai_feature_vector": [
+      74.2,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0025",
+    "account_number": "CTA-2002",
+    "amount": 310.0,
+    "currency": "EUR",
+    "date": null,
+    "date_valid": false,
+    "raw_date_value": "",
+    "ai_feature_vector": [
+      310.0,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0026",
+    "account_number": "CTA-3003",
+    "amount": 560.75,
+    "currency": "USD",
+    "date": "2024-04-01",
+    "date_valid": true,
+    "raw_date_value": "2024-04-01",
+    "ai_feature_vector": [
+      560.75,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0027",
+    "account_number": "CTA-4004",
+    "amount": 18.6,
+    "currency": "EUR",
+    "date": "2024-04-01",
+    "date_valid": true,
+    "raw_date_value": "01-04-2024",
+    "ai_feature_vector": [
+      18.6,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0028",
+    "account_number": "CTA-1001",
+    "amount": 999.99,
+    "currency": "USD",
+    "date": "2024-04-02",
+    "date_valid": true,
+    "raw_date_value": "2024/04/02",
+    "ai_feature_vector": [
+      999.99,
+      1
+    ]
+  },
+  {
+    "transaction_id": "TX-0029",
+    "account_number": "CTA-2002",
+    "amount": 45.0,
+    "currency": "GBP",
+    "date": "2024-04-02",
+    "date_valid": true,
+    "raw_date_value": "02-04-2024",
+    "ai_feature_vector": [
+      45.0,
+      0
+    ]
+  },
+  {
+    "transaction_id": "TX-0030",
+    "account_number": "CTA-4004",
+    "amount": 780.35,
+    "currency": "USD",
+    "date": "2024-04-03",
+    "date_valid": true,
+    "raw_date_value": "2024-04-03",
+    "ai_feature_vector": [
+      780.35,
+      1
+    ]
+  }
+]

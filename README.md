@@ -1,51 +1,119 @@
-# 🚀 SmartBancs API
+# SmartBancs API
 
-> Microservicio transaccional de alta concurrencia y procesamiento asíncrono, diseñado con un enfoque robusto en la integridad de datos (ACID) y arquitectura desacoplada para IA.
+Microservicio transaccional de alta concurrencia con PostgreSQL, procesamiento IA asíncrono y observabilidad operativa.
 
----
+## Stack tecnológico
 
-## 🛠️ Stack Tecnológico
-* **Backend:** Python 3.11, FastAPI, Uvicorn
-* **Base de Datos & Concurrencia:** PostgreSQL 15 (Alpine), SQLAlchemy / SQL Puro con control de bloqueos de fila (`SELECT ... FOR UPDATE`)
-* **Procesamiento de Datos (ETL):** Python (Pandas / Native scripts) para limpieza y estandarización de transacciones
-* **Infraestructura:** Docker y Docker Compose (Contenedorización completa)
+- **Backend:** Python 3.11, FastAPI y Uvicorn.
+- **Base de datos:** PostgreSQL 15 sobre Docker, con `SELECT ... FOR UPDATE` y pool `ThreadedConnectionPool`.
+- **Observabilidad:** logs JSON, métricas Prometheus y consultas de diagnóstico PostgreSQL.
+- **Dashboard:** Streamlit, pandas, Plotly y datos persistentes del backend.
+- **ETL:** limpieza de transacciones en `data_pipeline/`.
 
----
+## Ejecución local
 
-## 🏛️ Decisiones de Arquitectura y Retos Técnicos
+Prerrequisito: Docker Desktop activo. Para el dashboard se necesita Python con sus dependencias locales.
 
-### 1. Integridad Transaccional y Control de Concurrencia (ACID)
-En los sistemas bancarios modernos, el mayor riesgo es el fenómeno de *Race Conditions* (condiciones de carrera) durante transferencias simultáneas. SmartBancs resuelve esto mediante:
-* **Bloqueos Explícitos de Fila:** Implementación de consultas protegidas con `SELECT ... FOR UPDATE` ordenadas alfabéticamente para prevenir interbloqueos (*deadlocks*).
-* **Rollback Automático:** Si una transacción falla por fondos insuficientes o errores de red, la base de datos revierte los cambios de inmediato garantizando que ningún fondo desaparezca.
+1. Levanta PostgreSQL y la API:
 
-### 2. IA Desacoplada y No Bloqueante (`BackgroundTasks`)
-Para cumplir con estrictos estándares de latencia, el análisis de patrones de fraude o comportamiento financiero impulsado por IA se ejecuta de manera asíncrona:
-* Utiliza las `BackgroundTasks` nativas de FastAPI para liberar al cliente en milisegundos (`latency_ms < 30ms`).
-* El motor de IA procesa en segundo plano sin acoplarse al hilo principal de la petición HTTP.
-
-### 3. Pipeline de Datos (ETL)
-El repositorio incluye un módulo dedicado a la ingesta y depuración de transacciones masivas provenientes de fuentes heterogéneas (`raw_transactions.csv`), transformándolas en estructuras limpias y listas para modelos analíticos.
-
----
-
-## ⚙️ Guía de Instalación y Ejecución Local
-
-No necesitas instalar dependencias de Python ni configurar bases de datos locales en tu máquina. Todo corre mediante contenedores aislados.
-
-### Prerrequisitos
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y activo (con soporte WSL2 en Windows).
-
-### Pasos para levantar el entorno:
-
-1. **Clonar o abrir el repositorio en tu terminal:**
    ```bash
-   git clone smartbancs-app
-   cd smartbancs-app
-   Para ejecutar y ver el dashboard (`python -m streamlit run dashboard.py`)
-   Para ejecutar y ver el backend (`docker compose up --build`)
-   Para entrar (`http://localhost:8000/docs`)
-   ---
+   docker compose up --build
+   ```
 
-## 👤 Autor
-Desarrollado como parte de soluciones backend de alta eficiencia orientadas a la industria financiera y tecnológica.
+2. Instala las dependencias del dashboard en otra terminal:
+
+   ```bash
+   pip install -r dashboard_requirements.txt
+   ```
+
+3. Inicia el dashboard:
+
+   ```bash
+   python -m streamlit run dashboard.py
+   ```
+
+4. Abre las interfaces:
+
+   - API y OpenAPI: <http://localhost:8000/docs>
+   - Dashboard Streamlit: <http://localhost:8501>
+   - Endpoint de scrape Prometheus: <http://localhost:8000/metrics>
+
+El repositorio no incluye un servicio Prometheus ni una UI en `localhost:9090`; un servidor Prometheus externo debe configurarse para scrapear `/metrics`.
+
+## Observabilidad
+
+### Implementado
+
+| Capacidad | Ubicación real |
+| --- | --- |
+| Logs JSON correlacionables por `transaction_id` y `request_id` | `backend/app/observability.py`, `backend/app/main.py` y `backend/app/database.py` |
+| Métricas Prometheus en `/metrics` | `backend/app/main.py` y `backend/app/observability.py` |
+| Conteo por resultado (`SUCCESS`, errores de cliente y sistema) | `backend/app/observability.py`, `backend/app/main.py` y `db/init.sql` |
+| Diagnóstico de PostgreSQL: actividad, bloqueos, locks e idle transactions | `backend/app/observability.py` |
+| Resumen persistente, intentos y trazabilidad por transacción | `backend/app/observability.py`, `backend/app/database.py` y `db/init.sql` |
+| Dashboard persistente con auto-refresco y carga real | `dashboard.py` y `dashboard_requirements.txt` |
+| Pool de conexiones PostgreSQL | `backend/app/database.py` |
+| Métricas SLA y umbrales operativos del panel | `backend/app/observability.py` y `dashboard.py` |
+
+El endpoint de diagnóstico requiere `ENABLE_DB_DIAGNOSTICS=true` y el header `X-Admin-Token`. Los valores de Docker son de demostración.
+
+### Pendiente / fuera de alcance del MVP
+
+| Capacidad | Estado |
+| --- | --- |
+| Tracing distribuido con OpenTelemetry | Pendiente |
+| Agregador de logs como Loki o ELK | Pendiente |
+| Alertmanager con notificaciones | Pendiente |
+| Retención de métricas a largo plazo | Pendiente |
+| Autenticación real del endpoint de diagnóstico | Pendiente; actualmente usa un token estático de demostración |
+
+## Verificación reproducible
+
+Comprobar health y métricas:
+
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/metrics
+```
+
+Filtrar logs JSON por una transacción concreta. `fromjson?` ignora las líneas no JSON de Uvicorn:
+
+```bash
+docker compose logs --no-log-prefix backend 2>&1 \
+  | jq -R 'fromjson? | select(.transaction_id == "<TRANSACTION_ID>")'
+```
+
+Consultar el resumen y el diagnóstico PostgreSQL usando el token demo configurado en `docker-compose.yml`:
+
+```bash
+curl -H "X-Admin-Token: demo-admin-token" \
+  "http://localhost:8000/api/v1/observability/summary?window_minutes=60&bucket_minutes=1"
+
+curl -H "X-Admin-Token: demo-admin-token" \
+  http://localhost:8000/api/v1/observability/db-activity
+```
+
+URLs disponibles:
+
+- API: <http://localhost:8000/docs>
+- Métricas para Prometheus: <http://localhost:8000/metrics>
+- Dashboard: <http://localhost:8501>
+- UI de Prometheus: no se levanta en este `docker-compose`; debe ser externa.
+
+Generar carga real alternando `CTA-1001` y `CTA-2002`:
+
+```bash
+python load_test.py --threads 30 --total 300
+```
+
+## Límites actuales
+
+El dashboard ya no usa datos de sesión local para construir métricas: cada pestaña lee el backend, PostgreSQL o el exposition format de Prometheus, por lo que dos navegadores muestran los mismos datos persistentes. El resumen se calcula desde PostgreSQL y las métricas Prometheus viven en memoria del proceso; esto no sustituye un sistema de series temporales con retención a largo plazo.
+
+## Declaración de uso de IA
+
+Se utilizó GitHub Copilot para apoyar la instrumentación de observabilidad del backend y el rediseño del dashboard Streamlit.
+
+## Arquitectura transaccional
+
+Las transferencias bloquean las cuentas en orden alfabético con `SELECT ... FOR UPDATE`, usan `commit`/`rollback` y registran los intentos en `transaction_attempts`. La recomendación IA se procesa con `BackgroundTasks` después del commit de la transferencia.

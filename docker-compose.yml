@@ -29,6 +29,9 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://smartbancs_user:bancs_pass123@db:5432/smartbancs_db
+      # En producción, estos valores deben vivir en un gestor de secretos.
+      ENABLE_DB_DIAGNOSTICS: "true"
+      ADMIN_TOKEN: "demo-admin-token"
     depends_on:
       db:
         condition: service_healthy

@@ -1,0 +1,12 @@
+Comando 1: Levantar backend y PostgreSQL ... Levantar proyecto // docker compose up --build
+Comando 2: En otro terminal levantar dashboard // pip install -r dashboard_requirements.txt
+python -m streamlit run dashboard.py
+
+API: Mostrar con: http://localhost:8000/docs // enlace del API
+
+Abrir GitHub: https://github.com/Mehiby07?tab=repositories
+
+Loggin en dashboard: demo-admin-token
+
+ID: docker compose exec db psql -U smartbancs_user -d smartbancs_db -c "SELECT * FROM transactions;"
+ID EJEMPLO: b2fbea13-1b6f-4c66-a08b-d2df22b0d36e
